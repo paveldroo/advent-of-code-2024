@@ -82,6 +82,16 @@ func TestProcess(t *testing.T) {
 			expected: []int(nil),
 			wantOk:   false,
 		},
+		{
+			input:    "do()&mul(15,55)",
+			expected: []int{15, 55},
+			wantOk:   true,
+		},
+		{
+			input:    "don't()?mul(15,55)",
+			expected: []int{15, 55},
+			wantOk:   true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -91,6 +101,71 @@ func TestProcess(t *testing.T) {
 		}
 		if !reflect.DeepEqual(tt.expected, ints) {
 			t.Fatalf("input: %v, ints: %v, expected: %v", tt.input, ints, tt.expected)
+		}
+	}
+}
+
+func TestDo(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected bool
+	}{
+		{
+			input:    "do()",
+			expected: true,
+		},
+		{
+			input:    "do)(",
+			expected: false,
+		},
+	}
+
+	for _, tt := range tests {
+		ok := day3.ProcessDo([]rune(tt.input))
+		if ok != tt.expected {
+			t.Fatalf("input: %v, expected: %v, result: %v", tt.input, tt.expected, ok)
+		}
+	}
+}
+
+func TestDont(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected bool
+	}{
+		{
+			input:    "don't()",
+			expected: true,
+		},
+		{
+			input:    "don't)(",
+			expected: false,
+		},
+	}
+
+	for _, tt := range tests {
+		ok := day3.ProcessDont([]rune(tt.input))
+		if ok != tt.expected {
+			t.Fatalf("input: %v, expected: %v, result: %v", tt.input, tt.expected, ok)
+		}
+	}
+}
+
+func TestFirst(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected int
+	}{
+		{
+			input:    "xmul(2,4)&mul[3, 7]!^don't()_mul(5,5)+mul(32, 64](mul(11, 8)undo()?mul(8,5))",
+			expected: 48,
+		},
+	}
+
+	for _, tt := range tests {
+		res := day3.First(tt.input)
+		if tt.expected != res {
+			t.Fatalf("res: %v, expected: %v", res, tt.expected)
 		}
 	}
 }

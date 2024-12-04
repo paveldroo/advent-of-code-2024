@@ -9,6 +9,8 @@ import (
 )
 
 var p = []rune{'m', 'u', 'l', '('}
+var d = []rune{'d', 'o', '(', ')'}
+var dn = []rune{'d', 'o', 'n', 39, 't', '(', ')'}
 
 func Parse() {
 	f, err := os.Open("day3/data.txt")
@@ -28,9 +30,21 @@ func Parse() {
 
 func First(input string) int {
 	ri := []rune(input)
+	do := true
 	total := 0
 	for i, v := range ri {
-		if v == 'm' {
+		if v == 'd' {
+			ok := ProcessDo(append([]rune(nil), ri[i:]...))
+			if ok {
+				do = true
+			}
+			ok = ProcessDont(append([]rune(nil), ri[i:]...))
+			if ok {
+				do = false
+			}
+		}
+
+		if v == 'm' && do {
 			ints, ok := Process(append([]rune(nil), ri[i:]...))
 			if ok {
 				total += mul(ints[0], ints[1])
@@ -39,6 +53,36 @@ func First(input string) int {
 	}
 
 	return total
+}
+
+func ProcessDo(ri []rune) bool {
+	var i int
+	for i = 0; i < len(ri) && i < len(d); i++ {
+		if d[i] != ri[i] {
+			return false
+		}
+	}
+
+	if i == len(d) {
+		return true
+	}
+
+	return false
+}
+
+func ProcessDont(ri []rune) bool {
+	var i int
+	for i = 0; i < len(ri) && i < len(dn); i++ {
+		if dn[i] != ri[i] {
+			return false
+		}
+	}
+
+	if i == len(dn) {
+		return true
+	}
+
+	return false
 }
 
 func Process(ri []rune) ([]int, bool) {
