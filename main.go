@@ -1,7 +1,7 @@
 package main
 
-import "github.com/paveldroo/advent-of-code-2024/day2"
+import "github.com/paveldroo/advent-of-code-2024/day3"
 
 func main() {
-	day2.First()
+	day3.Parse()
 }
