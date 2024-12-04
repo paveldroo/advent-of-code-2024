@@ -1,23 +1,29 @@
 package day4
 
-var input = "MMMSXXMASM
-MSAMXMSMSA
-AMXSXMAAMM
-MSAMASMSMX
-XMASAMXAMM
-XXAMMXXAMA
-SMSMSASXSS
-SAXAMASAAA
-MAMMMXMMMM
-MXMXAXMASX"
+import (
+	"bufio"
+	"os"
+)
 
-var output = "....XXMAS.
-.SAMXMS...
-...S..A...
-..A.A.MS.X
-XMASAMX.MM
-X.....XA.A
-S.S.S.S.SS
-.A.A.A.A.A
-..M.M.M.MM
-.X.X.XMASX"
+func Run(input string) int {
+	if input == "" {
+		input = Parse()
+	}
+
+	return 0
+}
+
+func Parse() string {
+	f, err := os.Open("day4/data.txt")
+	if err != nil {
+		panic(err)
+	}
+
+	res := ""
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		res += scanner.Text()
+	}
+
+	return res
+}
