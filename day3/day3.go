@@ -11,6 +11,7 @@ import (
 var p = []rune{'m', 'u', 'l', '('}
 var d = []rune{'d', 'o', '(', ')'}
 var dn = []rune{'d', 'o', 'n', 39, 't', '(', ')'}
+var do = true
 
 func Parse() {
 	f, err := os.Open("day3/data.txt")
@@ -30,7 +31,6 @@ func Parse() {
 
 func First(input string) int {
 	ri := []rune(input)
-	do := true
 	total := 0
 	for i, v := range ri {
 		if v == 'd' {
