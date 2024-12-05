@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	res := day4.Run("")
+	res := day4.Run_2("")
 	fmt.Println("res", res)
 }
